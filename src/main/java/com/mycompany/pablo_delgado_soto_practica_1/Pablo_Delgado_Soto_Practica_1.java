@@ -32,6 +32,15 @@ public class Pablo_Delgado_Soto_Practica_1 {
         String msg = escribirMensaje();
         int space = 1;
         int bitR = 0;
+        
+        //Sender
+        //cuantos bits de redundancia
+        while (msg.length() + bitR + 1 > space) {
+            space = space * 2;
+            bitR++;
+        }//while
+        int tam = msg.length() + bitR + 1;
+        int[] save = new int[bitR];
     }//main
     
 }//Pablo_Delgado_Soto_Practica_1
