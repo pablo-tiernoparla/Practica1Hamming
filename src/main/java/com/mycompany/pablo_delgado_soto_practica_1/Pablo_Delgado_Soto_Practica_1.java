@@ -41,6 +41,11 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//while
         int tam = msg.length() + bitR + 1;
         int[] save = new int[bitR];
+        
+        //posiciones de bits de redundancia
+        for (int i = 0; i < bitR; i++) {
+            save[i] = (int) Math.pow(2, i);
+        }//for
     }//main
     
 }//Pablo_Delgado_Soto_Practica_1
