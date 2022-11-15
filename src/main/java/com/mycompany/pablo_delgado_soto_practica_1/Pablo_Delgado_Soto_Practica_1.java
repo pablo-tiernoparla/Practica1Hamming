@@ -114,5 +114,8 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 sumaG++;
             }//if
         }//for
+        
+        //escribir bit paridad global
+        mensaje[pow] = escribir(mensaje.length, pow);
     }//main
 }//Pablo_Delgado_Soto_Practica_1
