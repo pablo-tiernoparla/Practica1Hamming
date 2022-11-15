@@ -117,5 +117,10 @@ public class Pablo_Delgado_Soto_Practica_1 {
         
         //escribir bit paridad global
         mensaje[pow] = escribir(mensaje.length, pow);
+        
+        //Noise
+        //cambios
+        char[] mensajeN = new char[mensaje.length];
+        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
     }//main
 }//Pablo_Delgado_Soto_Practica_1
