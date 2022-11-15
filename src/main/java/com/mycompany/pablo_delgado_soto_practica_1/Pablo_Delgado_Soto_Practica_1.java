@@ -46,6 +46,24 @@ public class Pablo_Delgado_Soto_Practica_1 {
         for (int i = 0; i < bitR; i++) {
             save[i] = (int) Math.pow(2, i);
         }//for
+        
+        //donde colocar el mensaje
+        int cont = 0;
+        char[] mensaje = new char[tam];
+        for (int i = 1; i < mensaje.length; i++) {
+            boolean posAv = true;
+            int j = 0;
+            while (i == 0 || j < bitR) {
+                if (i == save[j]) {
+                    posAv = false;
+                }//if
+                j++;
+            }//while
+            if (posAv == true) {
+                mensaje[i] = msg.charAt(cont);
+                cont++;
+            }//if
+        }//for
     }//main
     
 }//Pablo_Delgado_Soto_Practica_1
