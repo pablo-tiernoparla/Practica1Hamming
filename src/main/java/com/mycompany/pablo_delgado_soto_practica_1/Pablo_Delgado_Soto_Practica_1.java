@@ -27,6 +27,17 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return msgR;
     }//escribirMensaje
     
+    public static char escribir(int tm, int i) {
+
+        char[] temp = new char[tm];
+        if (temp[i] == '1') {
+            temp[i] = '0';
+        } else {
+            temp[i] = '1';
+        }//if
+        return temp[i];
+    }//escribir
+    
     public static void main(String[] args) {
         
         String msg = escribirMensaje();
@@ -85,6 +96,14 @@ public class Pablo_Delgado_Soto_Practica_1 {
             contBitR++;
             contBit = contBit * 2;
         }//while
+        
+        //colocar bits redundancia
+        int tmp;
+        int pow;
+        for (int i = 0; i < sumas.length; i++) {
+            tmp = sumas[i] % 2;
+            pow = (int) Math.pow(2, i);
+            mensaje[pow] = escribir(mensaje.length, pow);
+        }//for
     }//main
-    
 }//Pablo_Delgado_Soto_Practica_1
