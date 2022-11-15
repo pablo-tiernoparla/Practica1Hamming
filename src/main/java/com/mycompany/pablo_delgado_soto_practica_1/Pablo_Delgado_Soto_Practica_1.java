@@ -38,6 +38,17 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return temp[i];
     }//escribir
     
+    public static double probF(double prob) {
+
+        if (Math.random() < prob) {
+            return 0;
+        } else if (Math.random() > prob && Math.random() < (prob * 2)) {
+            return 1;
+        } else {
+            return 2;
+        }//if
+    }//probF
+    
     public static void main(String[] args) {
         
         String msg = escribirMensaje();
@@ -118,5 +129,32 @@ public class Pablo_Delgado_Soto_Practica_1 {
         //escribir bit paridad global
         mensaje[pow] = escribir(mensaje.length, pow);
         
+        //Noise
+        //cambios
+        char[] mensajeN = new char[mensaje.length];
+        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
+        int cont1 = 0;
+        int cont2 = 0;
+        int discriminar = -8;
+        if (probF(0.33) == 1) {
+            for (int i = 0; i < mensaje.length; i++) {
+                if (prob(0.5) == true && cont1 == 0) {
+                    cont1++;
+                    mensajeN[i] = escribir(mensajeN.length, i);
+                } else if (i == mensaje.length && cont1 == 0) {
+                    i = 0;
+                }//if
+            }//for
+        } else if (probF(0.33) == 2) {
+            for (int i = 0; i < mensaje.length; i++) {
+                if (prob(0.5) == true && cont2 <= 1 && i != discriminar) {
+                    discriminar = i;
+                    cont2++;
+                    mensajeN[i] = escribir(mensajeN.length, i);
+                } else if (i == mensaje.length && cont2 <= 1) {
+                    i = 0;
+                }//if
+            }//for
+        }//if
     }//main
 }//Pablo_Delgado_Soto_Practica_1
