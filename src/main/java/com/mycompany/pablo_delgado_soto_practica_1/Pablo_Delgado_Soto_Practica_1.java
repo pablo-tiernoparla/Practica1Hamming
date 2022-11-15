@@ -64,6 +64,27 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 cont++;
             }//if
         }//for
+        
+        //que mira cada bit redundancia
+        int contBit = 1;
+        int result;
+        int contBitR = 0;
+        int[] sumas = new int[bitR];
+        int suma;
+        while (bitR > contBitR) {
+            suma = 0;
+            for (int i = 1; i < mensaje.length; i++) {
+                result = contBit & i;
+                if (result == contBit && result != 0) {
+                    if (mensaje[i] == '1') {
+                        suma++;
+                    }//if
+                }//if
+            }//for
+            sumas[contBitR] = suma;
+            contBitR++;
+            contBit = contBit * 2;
+        }//while
     }//main
     
 }//Pablo_Delgado_Soto_Practica_1
