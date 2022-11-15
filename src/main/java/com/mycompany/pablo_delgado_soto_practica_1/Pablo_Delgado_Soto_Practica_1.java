@@ -105,5 +105,14 @@ public class Pablo_Delgado_Soto_Practica_1 {
             pow = (int) Math.pow(2, i);
             mensaje[pow] = escribir(mensaje.length, pow);
         }//for
+        
+        //bit paridad global
+        int sumaG = 0;
+        pow = 0;
+        for (int i = 1; i < mensaje.length; i++) {
+            if (mensaje[i] == '1') {
+                sumaG++;
+            }//if
+        }//for
     }//main
 }//Pablo_Delgado_Soto_Practica_1
