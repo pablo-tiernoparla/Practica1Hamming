@@ -70,7 +70,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//for
 
         int cont = 0;
-        char[] mensaje = new char[tam];
+        int[] mensaje = new int[tam];
 
         //donde colocar el mensaje
         for (int i = 1; i < mensaje.length; i++) {
@@ -83,7 +83,11 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 j++;
             }//while
             if (posAv == true) {
-                mensaje[i] = msg.charAt(cont);
+                if (msg.charAt(cont) == '0'){
+                mensaje[i] = 0;
+                } else {
+                    mensaje[i] = 1;
+                }//if
                 cont++;
             }//if
         }//for
@@ -100,7 +104,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             for (int i = 1; i < mensaje.length; i++) {
                 result = contBit & i;
                 if (result == contBit && result != 0) {
-                    if (mensaje[i] == '1') {
+                    if (mensaje[i] == 1) {
                         suma++;
                     }//if
                 }//if
@@ -119,9 +123,9 @@ public class Pablo_Delgado_Soto_Practica_1 {
             pow = (int) Math.pow(2, i);
             //metodo igual que el de despues
             if (tmp == 1) {
-                mensaje[pow] = '1';
+                mensaje[pow] = 1;
             } else {
-                mensaje[pow] = '0';
+                mensaje[pow] = 0;
             }//if
         }//for
 
@@ -130,7 +134,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
 
         //bit paridad global
         for (int i = 1; i < mensaje.length; i++) {
-            if (mensaje[i] == '1') {
+            if (mensaje[i] == 1) {
                 sumaG++;
             }//if
         }//for
@@ -138,29 +142,29 @@ public class Pablo_Delgado_Soto_Practica_1 {
 
         //escribe
         if (bitG == 1) {
-            mensaje[pow] = '1';
+            mensaje[pow] = 1;
         } else {
-            mensaje[pow] = '0';
+            mensaje[pow] = 0;
         }//if
        
         //Noise
         //cambios
-        char[] mensajeN = new char [mensaje.length];
+        int[] mensajeN = new int [mensaje.length];
         System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
         int cont1 = 0;
         int cont2 = 0;
         int discriminar = -8;
         
-        double prob = 1;//probF(0.33);
+        double prob = probF(0.33);
         if (prob == 1)  {
             System.out.println("z");
             for (int i = 0; i < mensaje.length; i++)  {
                 if (prob(0.5) == true && cont1 == 0){
                     cont1++;
-                    if (mensajeN[i] == '1')  {
-                        mensajeN[i] = '0';
+                    if (mensajeN[i] == 1)  {
+                        mensajeN[i] = 0;
                     } else {
-                        mensajeN[i] = '1';
+                        mensajeN[i] = 1;
                     }//if
                 } else if (i == mensaje.length && cont1 == 0) {
                     i = 0;
@@ -172,21 +176,21 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 if (prob(0.5) == true && cont2 <= 1 && i != discriminar){
                     discriminar = i;
                     cont2++;
-                    if (mensajeN[i] == '1')  {
-                        mensajeN[i] = '0';
+                    if (mensajeN[i] == 1)  {
+                        mensajeN[i] = 0;
                     } else {
-                        mensajeN[i] = '1';
+                        mensajeN[i] = 1;
                     }//if
                 } else if (i == mensaje.length && cont2 <= 1) {
                     i = 0;
                 }//if
             }//for
         }//if
-       
+        
         //Reciever
         //copiar mensaje
         int n = 0;
-        char[] mensajeR = new char [mensajeN.length];
+        int[] mensajeR = new int [mensajeN.length];
         for (int i = 1; i < mensajeN.length; i++){
             if (i == (int)Math.pow(2,n)){
                 n++;
@@ -207,7 +211,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             for (int i = 1; i < mensajeR.length; i++) {
                 result = contBit & i;
                 if (result == contBit && result != 0) {
-                    if (mensajeR[i] == '1') {
+                    if (mensajeR[i] == 1) {
                         suma++;
                     }//if
                 }//if
@@ -226,25 +230,25 @@ public class Pablo_Delgado_Soto_Practica_1 {
             pow = (int) Math.pow(2, i);
             //metodo igual que el de despues
             if (tmp == 1) {
-                mensajeR[pow] = '1';
+                mensajeR[pow] = 1;
             } else {
-                mensajeR[pow] = '0';
+                mensajeR[pow] = 0;
             }//if
         }//for
         
         sumaG = 0;
         //bit paridad global
         for (int i = 1; i < mensajeR.length; i++) {
-            if (mensajeR[i] == '1') {
+            if (mensajeR[i] == 1) {
                 sumaG++;
             }//if
         }//for
 
         //escribe
         if (sumaG % 2 == 1) {
-            mensajeR[0] = '1';
+            mensajeR[0] = 1;
         } else {
-            mensajeR[0] = '0';
+            mensajeR[0] = 0;
         }//if
         System.out.println(mensajeR[0]);
         //aqui acaba lo copiao
@@ -263,10 +267,24 @@ public class Pablo_Delgado_Soto_Practica_1 {
             finish = finish * 2;
         }//while
         suma = 0;
+        int falloBitG;
+        if (suma % 2 == 1){
+            falloBitG = 1;
+        }else{
+            falloBitG = 0; 
+        }//if
+        if (contFallo > 1 && falloBitG == 1){
+            if (mensajeR[falloH] == 1){
+                mensajeR[falloH] = 0;
+            } else {
+                mensajeR[falloH] = 1;
+            }//if
+        }//if
+        
         if (contFallo > 0){
             fallo++;
             for (int i = 0; i < mensajeR.length; i++){
-                if (mensajeR[i] == '1'){
+                if (mensajeR[i] == 1){
                     suma++;
                 }//if
             }//for
@@ -276,12 +294,8 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 fallo++;
             }//if
         }//if
-        char falloBitG;
-        if (suma % 2 == '1'){
-            falloBitG = '1';
-        }else{
-            falloBitG = '0'; 
-        }//if
+        
+        
         if (contFallo == 0 && mensajeN[0] != mensajeR[0]){
             fallo++;
             falloH = 0;
@@ -314,9 +328,5 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }
         System.out.println("");
         System.out.println(contFallo);
-        
-        //1011001000101011 cambiar fila de arriba
-        
-        
     }//main
 }//Pablo_Delgado_Soto_Practica_1
