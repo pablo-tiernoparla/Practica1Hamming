@@ -158,52 +158,70 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//if
         
         //Reciever
-        //comprobar bits paridad
-        int suma2 = 0;
+        //copiar mensaje
         int n = 0;
-        int finisher = 1;
-        while (mensajeN.length > finisher) {
-            if (mensajeN[(int) Math.pow(2, n)] == '1') {
-                suma2++;
+        int[] mensajeR = new int [mensajeN.length];
+        for (int i = 1; i < mensajeN.length; i++){
+            if (i == (int)Math.pow(2,n)){
+                n++;
+                continue;
             }//if
-            n++;
-            finisher = finisher *2;
-        }//while
+            mensajeR[i] = mensajeN[i];
+        }//for
         
-        char solucion;
-        System.out.println(suma2);
-        if (suma2 % 2 == 1) {
-            solucion = '1';
-        } else {
-            solucion = '0';
-        }//if
-        int fallo = 0;
-        if (solucion != mensajeN[0]) {
-            fallo++;
-        }//if
-       
-        //comprobar mensaje
-        int contBit2 = 1;
-        int result2;
-        int contBitR2 = 0;
-        int[] sumas2 = new int[bitR];
-        int suma3 = 0;
-        while (bitR > contBitR2) {
-            suma3 = 0;
-            for (int i = 1; i < mensaje.length; i++) {
-                result2 = contBit2 & i;
-                if (result2 == contBit2 && result2 != 0) {
-                    if (mensajeN[i] == '1') {
-                        suma3++;
+        //poner bits paridad
+        //esta copiao de arriba        
+        contBit = 1;
+        result = 0;
+        contBitR = 0;
+        sumas = new int[bitR];
+
+        while (bitR > contBitR) {
+            suma = 0;
+            for (int i = 1; i < mensajeR.length; i++) {
+                result = contBit & i;
+                if (result == contBit && result != 0) {
+                    if (mensajeR[i] == 1) {
+                        suma++;
                     }//if
                 }//if
             }//for
-            suma3 = suma3 % 2;
-            sumas2[contBitR2] = suma3;
-            contBitR2++;
-            contBit2 = contBit2 * 2;
+            sumas[contBitR] = suma;
+            contBitR++;
+            contBit = contBit * 2;
         }//while
-       
+        
+        tmp = 0;
+        pow = 0;
+
+        //colocar bits redundancia
+        for (int i = 0; i < sumas.length; i++) {
+            tmp = sumas[i] % 2;
+            pow = (int) Math.pow(2, i);
+            //metodo igual que el de despues
+            if (tmp == 1) {
+                mensajeR[pow] = 1;
+            } else {
+                mensajeR[pow] = 0;
+            }//if
+        }//for
+        
+        sumaG = 0;
+        //bit paridad global
+        for (int i = 1; i < mensajeR.length; i++) {
+            if (mensajeR[i] == 1) {
+                sumaG++;
+            }//if
+        }//for
+
+        //escribe
+        if (sumaG % 2 == 1) {
+            mensajeR[0] = 1;
+        } else {
+            mensajeR[0] = 0;
+        }//if
+        System.out.println(mensajeR[0]);
+        //aqui acaba lo copiao
         
     }//main
 }//Pablo_Delgado_Soto_Practica_1
