@@ -251,6 +251,30 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
         }//if
         
+        if (contFallo > 0){
+            fallo++;
+            for (int i = 0; i < mensajeR.length; i++){
+                if (mensajeR[i] == 1){
+                    suma++;
+                }//if
+            }//for
+            if (suma % 2 == 1 && contFallo > 1){
+                falloH = sumaFallos;
+            } else {
+                fallo++;
+            }//if
+        }//if
+        
+        
+        if (contFallo == 0 && mensajeN[0] != mensajeR[0]){
+            fallo++;
+            falloH = 0;
+        } else {
+            if (fallo > 0 && contFallo == 0 && falloBitG == mensajeR[0]){
+                fallo++;
+            }//if
+        }//if
+        
         
     }//main
 }//Pablo_Delgado_Soto_Practica_1
