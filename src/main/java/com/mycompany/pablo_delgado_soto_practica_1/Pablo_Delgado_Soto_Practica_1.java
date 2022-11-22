@@ -182,6 +182,28 @@ public class Pablo_Delgado_Soto_Practica_1 {
             fallo++;
         }//if
        
+        //comprobar mensaje
+        int contBit2 = 1;
+        int result2;
+        int contBitR2 = 0;
+        int[] sumas2 = new int[bitR];
+        int suma3 = 0;
+        while (bitR > contBitR2) {
+            suma3 = 0;
+            for (int i = 1; i < mensaje.length; i++) {
+                result2 = contBit2 & i;
+                if (result2 == contBit2 && result2 != 0) {
+                    if (mensajeN[i] == '1') {
+                        suma3++;
+                    }//if
+                }//if
+            }//for
+            suma3 = suma3 % 2;
+            sumas2[contBitR2] = suma3;
+            contBitR2++;
+            contBit2 = contBit2 * 2;
+        }//while
+       
         
     }//main
 }//Pablo_Delgado_Soto_Practica_1
