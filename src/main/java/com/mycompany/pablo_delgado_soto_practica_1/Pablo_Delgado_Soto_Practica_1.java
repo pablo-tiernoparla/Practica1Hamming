@@ -226,5 +226,11 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 sumaGN++;
             }//if
         }//for
+        
+        int fallo = 0;
+        int bitGN = 0;
+        for (int i = 0; i < mensajeN.length; i++){
+            bitGN = bitGN + mensajeN[i];
+        }//for
     }//main
 }//Pablo_Delgado_Soto_Practica_1
