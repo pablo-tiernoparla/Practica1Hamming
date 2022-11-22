@@ -69,7 +69,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return bitR;
     }
     
-    public static int[] calcPosBitR(String msg, int bitR){
+    public static int[] calcPosBitR(int bitR){
         
         
         int[] temp = new int[bitR];
@@ -82,7 +82,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
     public static int[] escribirMsgArr(int tam, int bitR, String msg){
         
         int[] save = new int [bitR];
-        System.arraycopy(calcPosBitR(msg, bitR), 0, save, 0, save.length);
+        System.arraycopy(calcPosBitR(bitR), 0, save, 0, save.length);
         int cont = 0;
         int[] mensaje = new int[tam];
         for (int i = 1; i < mensaje.length; i++) {
@@ -118,9 +118,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             for (int i = 1; i < mensaje.length; i++) {
                 result = contBit & i;
                 if (result == contBit && result != 0) {
-                    if (mensaje[i] == 1) {
-                        suma++;
-                    }//if
+                    suma = suma + mensaje[i];
                 }//if
             }//for
             sumas[contBitR] = suma;
@@ -139,20 +137,16 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return sumaG;
     }
     
-    public static int[] copiarArr(int[] mensaje, int[] mensaje2){
-        
-        System.arraycopy(mensaje, 0, mensaje2, 0, mensaje.length);
-        return mensaje2;
-    }
-    
     public static int[] sender(String msg){
         
         int bitR = cuantosBitsR(msg);
         int tam = msg.length() + bitR + 1;
         int[] mensaje = new int [tam];
-        copiarArr(escribirMsgArr(tam, bitR, msg), mensaje);
+        System.arraycopy(escribirMsgArr(tam, bitR, msg),
+                0, mensaje, 0, mensaje.length);
         int[] sumas = new int [bitR];
-        copiarArr(pendienteBitR(bitR, mensaje), mensaje);
+        System.arraycopy(pendienteBitR(bitR, mensaje),
+                0, sumas, 0, sumas.length);
         escribirParidad(sumas, mensaje);
         escribir(mensaje, calcularBitG(mensaje) % 2, 0);
         return mensaje;
@@ -165,6 +159,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         int discriminar = -3;
         double prob = probF(0.33);
         if (prob == 1)  {
+            System.out.println("1 fallo");
             for (int i = 0; i < mensaje.length; i++)  {
                 if (prob(0.5) == true && cont1 == 0){
                     cont1++;
@@ -174,6 +169,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 }//if
             }//for
         } else if (prob == 2)  {
+            System.out.println("2 fallos");
             for (int i = 0; i < mensaje.length; i++)  {
                 if (prob(0.5) == true && cont2 <= 1 && i != discriminar){
                     discriminar = i;
@@ -196,22 +192,9 @@ public class Pablo_Delgado_Soto_Practica_1 {
                     }//if
     }
     
-    public static void main(String[] args) {
-       
-        String msg = escribirMensaje();
-        int[] mensaje = new int [sender(msg).length];
-        copiarArr(sender(msg), mensaje);
-        int[] mensajeN = new int [mensaje.length];
-        copiarArr(mensaje, mensajeN);
-        provocarError(mensaje, mensajeN);
-        //Noise
-        //cambios
+    public static void copiarBitsMensaje(int[] mensajeN, int[] mensajeR){
         
-        
-        //Reciever
-        //copiar mensaje
         int n = 0;
-        int[] mensajeR = new int [mensajeN.length];
         for (int i = 1; i < mensajeN.length; i++){
             if (i == (int)Math.pow(2,n)){
                 n++;
@@ -219,135 +202,22 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
             mensajeR[i] = mensajeN[i];
         }//for
+    }
+    
+    public static void main(String[] args) {
+       
+        String msg = escribirMensaje();
+        int[] mensaje = new int [sender(msg).length];
+        System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
+        int[] mensajeN = new int [mensaje.length];
+        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
+        provocarError(mensaje, mensajeN);
         
-        //poner bits paridad
-        //esta copiao de arriba        
-        contBit = 1;
-        result = 0;
-        contBitR = 0;
-        sumas = new int[bitR];
-
-        while (bitR > contBitR) {
-            suma = 0;
-            for (int i = 1; i < mensajeR.length; i++) {
-                result = contBit & i;
-                if (result == contBit && result != 0) {
-                    if (mensajeR[i] == 1) {
-                        suma++;
-                    }//if
-                }//if
-            }//for
-            sumas[contBitR] = suma;
-            contBitR++;
-            contBit = contBit * 2;
-        }//while
+        int[] mensajeR = new int [mensajeN.length];
+        copiarBitsMensaje(mensajeN, mensajeR);
+        pendienteBitR(cuantosBitsR(msg), mensajeR);
+        escribirParidad(pendienteBitR(cuantosBitsR(msg), mensajeR), mensajeR);
+        escribir(mensajeR, calcularBitG(mensajeR) % 2, 0);
         
-        tmp = 0;
-        pow = 0;
-
-        //colocar bits redundancia
-        for (int i = 0; i < sumas.length; i++) {
-            tmp = sumas[i] % 2;
-            pow = (int) Math.pow(2, i);
-            //metodo igual que el de despues
-            if (tmp == 1) {
-                mensajeR[pow] = 1;
-            } else {
-                mensajeR[pow] = 0;
-            }//if
-        }//for
-        
-        sumaG = 0;
-        //bit paridad global
-        for (int i = 1; i < mensajeR.length; i++) {
-            if (mensajeR[i] == 1) {
-                sumaG++;
-            }//if
-        }//for
-
-        //escribe
-        if (sumaG % 2 == 1) {
-            mensajeR[0] = 1;
-        } else {
-            mensajeR[0] = 0;
-        }//if
-        System.out.println(mensajeR[0]);
-        //aqui acaba lo copiao
-        int q = 0;
-        int contFallo = 0;
-        int falloH = -3;
-        int sumaFallos = 0;
-        int finish = 1;
-        int fallo = 0;
-        while (finish < mensajeR.length){
-            if (mensajeR[finish] != mensajeN[finish]){
-                sumaFallos = sumaFallos + finish;
-                contFallo++;
-                falloH = finish;
-            }//if
-            finish = finish * 2;
-        }//while
-        suma = 0;
-        int falloBitG;
-        if (suma % 2 == 1){
-            falloBitG = 1;
-        }else{
-            falloBitG = 0; 
-        }//if
-        if (contFallo > 1 && falloBitG == 1){
-            if (mensajeR[falloH] == 1){
-                mensajeR[falloH] = 0;
-            } else {
-                mensajeR[falloH] = 1;
-            }//if
-        }//if
-        
-        if (contFallo > 0){
-            fallo++;
-            for (int i = 0; i < mensajeR.length; i++){
-                if (mensajeR[i] == 1){
-                    suma++;
-                }//if
-            }//for
-            if (suma % 2 == 1 && contFallo > 1){
-                falloH = sumaFallos;
-            } else {
-                fallo++;
-            }//if
-        }//if
-        
-        
-        if (contFallo == 0 && mensajeN[0] != mensajeR[0]){
-            fallo++;
-            falloH = 0;
-        } else {
-            if (fallo > 0 && contFallo == 0 && falloBitG == mensajeR[0]){
-                fallo++;
-            }//if
-        }//if
-        
-        if (fallo == 1){
-            System.out.println("El error está en: " + falloH);
-        } else if (fallo == 2){
-            System.out.println("Se detectaron 2 errores");
-        } else {
-            System.out.println("No hay errores");
-        }//if
-        
-        System.out.print(msg);
-        System.out.println("");
-        for (int i = 0; i < mensaje.length; i++){
-            System.out.print(mensaje[i]);
-        }
-        System.out.println("");
-        for (int i = 0; i < mensajeN.length; i++){
-            System.out.print(mensajeN[i]);
-        }
-        System.out.println("");
-        for (int i = 0; i < mensajeR.length; i++){
-            System.out.print(mensajeR[i]);
-        }
-        System.out.println("");
-        System.out.println(contFallo);
     }//main
 }//Pablo_Delgado_Soto_Practica_1
