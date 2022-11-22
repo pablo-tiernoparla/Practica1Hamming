@@ -222,6 +222,20 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//if
         System.out.println(mensajeR[0]);
         //aqui acaba lo copiao
+        int q = 0;
+        int contFallo = 0;
+        int falloH = -3;
+        int sumaFallos = 0;
+        int finish = 1;
+        int fallo = 0;
+        while (finish < mensajeR.length){
+            if (mensajeR[finish] != mensajeN[finish]){
+                sumaFallos = sumaFallos + finish;
+                contFallo++;
+                falloH = finish;
+            }//if
+            finish = finish * 2;
+        }//while
         
     }//main
 }//Pablo_Delgado_Soto_Practica_1
