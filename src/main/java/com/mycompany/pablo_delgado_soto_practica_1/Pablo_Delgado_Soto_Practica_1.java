@@ -267,20 +267,5 @@ public class Pablo_Delgado_Soto_Practica_1 {
 
         int[] mensajeR = new int[mensajeN.length];
         reciever(mensajeN, mensajeR, msg);
-        
-
-        
-
-        for (int i = 0; i < mensaje.length; i++) {
-            System.out.print(mensaje[i]);
-        }
-        System.out.println("");
-        for (int i = 0; i < mensaje.length; i++) {
-            System.out.print(mensajeN[i]);
-        }
-        System.out.println("");
-        for (int i = 0; i < mensaje.length; i++) {
-            System.out.print(mensajeR[i]);
-        }
     }//main
 }//Pablo_Delgado_Soto_Practica_1
