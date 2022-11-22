@@ -219,5 +219,12 @@ public class Pablo_Delgado_Soto_Practica_1 {
         escribirParidad(pendienteBitR(cuantosBitsR(msg), mensajeR), mensajeR);
         escribir(mensajeR, calcularBitG(mensajeR) % 2, 0);
         
+        
+        int sumaGN = 0;
+        for (int i = 0; i < mensajeN.length; i++) {
+            if (mensajeN[i] == '1') {
+                sumaGN++;
+            }//if
+        }//for
     }//main
 }//Pablo_Delgado_Soto_Practica_1
