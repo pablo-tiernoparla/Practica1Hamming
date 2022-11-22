@@ -250,6 +250,13 @@ public class Pablo_Delgado_Soto_Practica_1 {
         } else if (bitGN % 2 == 0 && contFallo > 0) {
             fallo = 2;
         }//if
-
+        
+        if (fallo == 1){
+            System.out.println("El error está en la posición: " + falloPos);
+        } else if (fallo == 2){
+            System.out.println("Se detectaron 2 errores");
+        } else {
+            System.out.println("No se detectaron errores");
+        }//if
     }//main
 }//Pablo_Delgado_Soto_Practica_1
