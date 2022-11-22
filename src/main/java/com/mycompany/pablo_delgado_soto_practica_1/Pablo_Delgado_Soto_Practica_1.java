@@ -14,17 +14,17 @@ public class Pablo_Delgado_Soto_Practica_1 {
         Scanner sc = new Scanner(System.in);
         System.out.println("Longitud del mensaje");
         int tamM = sc.nextInt();
-        String msgR = "";
+        String msg = "";
         char one = '1';
         char zero = '0';
         for (int i = 0; i < tamM; i++) {
             if (prob(0.5) == true) {
-                msgR = msgR + one;
+                msg = msg + one;
             } else {
-                msgR = msgR + zero;
+                msg = msg + zero;
             }//if
         }//for
-        return msgR;
+        return msg;
     }//escribirMensaje
 
     public static void escribir(int[] mensaje, int tmp, int pow) {
@@ -69,25 +69,26 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return bitR;
     }
 
-    public static int[] calcPosBitR(int bitR) {
+    public static int[] calcPosBitR(String msg) {
 
-        int[] temp = new int[bitR];
-        for (int i = 0; i < bitR; i++) {
+        int[] temp = new int[cuantosBitsR(msg)];
+        for (int i = 0; i < cuantosBitsR(msg); i++) {
+
             temp[i] = (int) Math.pow(2, i);
         }//for
         return temp;
     }
+    
+    public static int[] escribirMsgArr(int tam, String msg) {
 
-    public static int[] escribirMsgArr(int tam, int bitR, String msg) {
-
-        int[] save = new int[bitR];
-        System.arraycopy(calcPosBitR(bitR), 0, save, 0, save.length);
+        int[] save = new int[cuantosBitsR(msg)];
+        System.arraycopy(calcPosBitR(msg), 0, save, 0, save.length);
         int cont = 0;
         int[] mensaje = new int[tam];
         for (int i = 1; i < mensaje.length; i++) {
             boolean posAv = true;
             int j = 0;
-            while (i == 0 || j < bitR) {
+            while (i == 0 || j < cuantosBitsR(msg)) {
                 if (i == save[j]) {
                     posAv = false;
                 }//if
@@ -104,15 +105,15 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//for
         return mensaje;
     }
-
-    public static int[] pendienteBitR(int bitR, int[] mensaje) {
+ 
+    public static int[] pendienteBitR(int[] mensaje, String msg) {
 
         int contBit = 1;
         int result;
         int contBitR = 0;
-        int[] sumas = new int[bitR];
+        int[] sumas = new int[cuantosBitsR(msg)];
         int suma;
-        while (bitR > contBitR) {
+        while (cuantosBitsR(msg) > contBitR) {
             suma = 0;
             for (int i = 1; i < mensaje.length; i++) {
                 result = contBit & i;
@@ -130,7 +131,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
     public static int calcularBitG(int[] mensaje) {
 
         int sumaG = 0;
-        for (int i = 1; i < mensaje.length; i++) {
+        for (int i = 0; i < mensaje.length; i++) {
             sumaG = sumaG + mensaje[i];
         }//for
         return sumaG;
@@ -141,11 +142,12 @@ public class Pablo_Delgado_Soto_Practica_1 {
         int bitR = cuantosBitsR(msg);
         int tam = msg.length() + bitR + 1;
         int[] mensaje = new int[tam];
-        System.arraycopy(escribirMsgArr(tam, bitR, msg),
+        System.arraycopy(escribirMsgArr(tam, msg),
                 0, mensaje, 0, mensaje.length);
         int[] sumas = new int[bitR];
-        System.arraycopy(pendienteBitR(bitR, mensaje),
-                0, sumas, 0, sumas.length);
+        System.arraycopy(pendienteBitR(mensaje, msg), 0, sumas, 0, sumas.length);
+        System.arraycopy(escribirMsgArr(tam, msg), 0, mensaje, 0, mensaje.length);
+        System.arraycopy(pendienteBitR(mensaje, msg), 0, sumas, 0, sumas.length);
         escribirParidad(sumas, mensaje);
         escribir(mensaje, calcularBitG(mensaje) % 2, 0);
         return mensaje;
@@ -203,34 +205,51 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//for
     }
 
-    public static void main(String[] args) {
-
-        String msg = escribirMensaje();
-        int[] mensaje = new int[sender(msg).length];
-        System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
-        int[] mensajeN = new int[mensaje.length];
-        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
-        provocarError(mensaje, mensajeN);
-
-        int[] mensajeR = new int[mensajeN.length];
-        copiarBitsMensaje(mensajeN, mensajeR);
-        pendienteBitR(cuantosBitsR(msg), mensajeR);
-        escribirParidad(pendienteBitR(cuantosBitsR(msg), mensajeR), mensajeR);
-        escribir(mensajeR, calcularBitG(mensajeR) % 2, 0);
-
-        int sumaGN = 0;
-        for (int i = 0; i < mensajeN.length; i++) {
-            if (mensajeN[i] == '1') {
-                sumaGN++;
-            }//if
-        }//for
+    public static int calcularFallos(int contFallo, int[] mensajeN) {
 
         int fallo = 0;
-        int bitGN = 0;
-        for (int i = 0; i < mensajeN.length; i++) {
-            bitGN = bitGN + mensajeN[i];
-        }//for
+        if (calcularBitG(mensajeN) % 2 == 1) {
+            fallo = 1;
+        } else if (calcularBitG(mensajeN) % 2 == 0 && contFallo > 0) {
+            fallo = 2;
+        }//if
+        return fallo;
+    }
 
+
+    public static int posicionFallo(int contFallo, int[] mensajeN, int[] mensajeR) {
+
+        int falloPos = -3;
+        if (calcularFallos(contFallo, mensajeN) == 1) {
+            if (contFallo == 0 && calcularBitG(mensajeN) % 2 == 1) {
+                falloPos = 0;
+            } else if (mensajeR[0] != mensajeN[0]) {
+                falloPos = 0;
+            }//if
+        }//if
+        return falloPos;
+    }
+    
+    public static void escribirFallos(int contFallo, int[] mensajeN, int[] mensajeR){
+        
+        if (calcularFallos(contFallo, mensajeN) == 1) {
+            System.out.println("El error está en la posición: " + 
+                    posicionFallo(contFallo, mensajeN, mensajeR));
+        } else if (calcularFallos(contFallo, mensajeN) == 2) {
+            System.out.println("Se detectaron 2 errores");
+        } else {
+            System.out.println("No se detectaron errores");
+        }//if
+    }
+    
+    public static void reciever(int[] mensajeN, int[] mensajeR, String msg){
+        
+        copiarBitsMensaje(mensajeN, mensajeR);
+        pendienteBitR(mensajeR, msg);
+        escribirParidad(pendienteBitR(mensajeR, msg), mensajeR);
+        escribir(mensajeR, calcularBitG(mensajeR) % 2, 0);
+
+        calcularBitG(mensajeN);
         int contFallo = 0;
         int falloPos = 0;
         for (int i = 0; i < cuantosBitsR(msg); i++) {
@@ -239,35 +258,35 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 contFallo++;
             }//if
         }//for
+        posicionFallo(contFallo, mensajeN, mensajeR);
+        escribirFallos(contFallo, mensajeN, mensajeR);
+    }
+    
+    public static void main(String[] args) {
 
-        if (bitGN % 2 == 1) {
-            fallo = 1;
-            if (contFallo == 0 && bitGN % 2 == 1) {
-                falloPos = 0;
-            } else if (mensajeR[0] != mensajeN[0]) {
-                falloPos = 0;
-            }//if
-        } else if (bitGN % 2 == 0 && contFallo > 0) {
-            fallo = 2;
-        }//if
+        String msg = escribirMensaje();
+        int[] mensaje = new int[sender(msg).length];
+        System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
         
-        if (fallo == 1){
-            System.out.println("El error está en la posición: " + falloPos);
-        } else if (fallo == 2){
-            System.out.println("Se detectaron 2 errores");
-        } else {
-            System.out.println("No se detectaron errores");
-        }//if
+        int[] mensajeN = new int[mensaje.length];
+        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
+        provocarError(mensaje, mensajeN);
+
+        int[] mensajeR = new int[mensajeN.length];
+        reciever(mensajeN, mensajeR, msg);
         
-        for (int i = 0; i < mensaje.length; i++){
+
+        
+
+        for (int i = 0; i < mensaje.length; i++) {
             System.out.print(mensaje[i]);
         }
         System.out.println("");
-        for (int i = 0; i < mensaje.length; i++){
+        for (int i = 0; i < mensaje.length; i++) {
             System.out.print(mensajeN[i]);
         }
         System.out.println("");
-        for (int i = 0; i < mensaje.length; i++){
+        for (int i = 0; i < mensaje.length; i++) {
             System.out.print(mensajeR[i]);
         }
     }//main
