@@ -232,5 +232,14 @@ public class Pablo_Delgado_Soto_Practica_1 {
         for (int i = 0; i < mensajeN.length; i++){
             bitGN = bitGN + mensajeN[i];
         }//for
+
+        int contFallo = 0;
+        int falloPos = 0;
+        for (int i = 0; i < cuantosBitsR(msg); i++) {
+            if (mensajeR[(int) Math.pow(2, i)] != mensajeN[(int) Math.pow(2, i)]) {
+                falloPos = falloPos + (int) Math.pow(2, i);
+                contFallo++;
+            }//if
+        }//for
     }//main
 }//Pablo_Delgado_Soto_Practica_1
