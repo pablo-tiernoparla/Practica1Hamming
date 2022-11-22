@@ -275,6 +275,12 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
         }//if
         
-        
+        if (fallo == 1){
+            System.out.println("El error está en: " + falloH);
+        } else if (fallo == 2){
+            System.out.println("Se detectaron 2 errores");
+        } else {
+            System.out.println("No hay errores");
+        }//if
     }//main
 }//Pablo_Delgado_Soto_Practica_1
