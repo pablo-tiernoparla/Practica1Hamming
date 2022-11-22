@@ -156,5 +156,19 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 }//if
             }//for
         }//if
+        
+        //Reciever
+        //comprobar bits paridad
+        int suma2 = 0;
+        int n = 0;
+        int finisher = 1;
+        while (mensajeN.length > finisher) {
+            if (mensajeN[(int) Math.pow(2, n)] == '1') {
+                suma2++;
+            }//if
+            n++;
+            finisher = finisher *2;
+        }//while
+        
     }//main
 }//Pablo_Delgado_Soto_Practica_1
