@@ -170,5 +170,18 @@ public class Pablo_Delgado_Soto_Practica_1 {
             finisher = finisher *2;
         }//while
         
+        char solucion;
+        System.out.println(suma2);
+        if (suma2 % 2 == 1) {
+            solucion = '1';
+        } else {
+            solucion = '0';
+        }//if
+        int fallo = 0;
+        if (solucion != mensajeN[0]) {
+            fallo++;
+        }//if
+       
+        
     }//main
 }//Pablo_Delgado_Soto_Practica_1
