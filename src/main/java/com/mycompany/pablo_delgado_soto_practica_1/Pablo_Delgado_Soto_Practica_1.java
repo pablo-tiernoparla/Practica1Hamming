@@ -73,12 +73,11 @@ public class Pablo_Delgado_Soto_Practica_1 {
 
         int[] temp = new int[cuantosBitsR(msg)];
         for (int i = 0; i < cuantosBitsR(msg); i++) {
-
             temp[i] = (int) Math.pow(2, i);
         }//for
         return temp;
     }
-    
+
     public static int[] escribirMsgArr(int tam, String msg) {
 
         int[] save = new int[cuantosBitsR(msg)];
@@ -105,7 +104,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//for
         return mensaje;
     }
- 
+
     public static int[] pendienteBitR(int[] mensaje, String msg) {
 
         int contBit = 1;
@@ -142,11 +141,8 @@ public class Pablo_Delgado_Soto_Practica_1 {
         int bitR = cuantosBitsR(msg);
         int tam = msg.length() + bitR + 1;
         int[] mensaje = new int[tam];
-        System.arraycopy(escribirMsgArr(tam, msg),
-                0, mensaje, 0, mensaje.length);
-        int[] sumas = new int[bitR];
-        System.arraycopy(pendienteBitR(mensaje, msg), 0, sumas, 0, sumas.length);
         System.arraycopy(escribirMsgArr(tam, msg), 0, mensaje, 0, mensaje.length);
+        int[] sumas = new int[bitR];
         System.arraycopy(pendienteBitR(mensaje, msg), 0, sumas, 0, sumas.length);
         escribirParidad(sumas, mensaje);
         escribir(mensaje, calcularBitG(mensaje) % 2, 0);
@@ -160,7 +156,6 @@ public class Pablo_Delgado_Soto_Practica_1 {
         int discriminar = -3;
         double prob = probF(0.33);
         if (prob == 1) {
-            System.out.println("1 fallo");
             for (int i = 0; i < mensaje.length; i++) {
                 if (prob(0.5) == true && cont1 == 0) {
                     cont1++;
@@ -170,7 +165,6 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 }//if
             }//for
         } else if (prob == 2) {
-            System.out.println("2 fallos");
             for (int i = 0; i < mensaje.length; i++) {
                 if (prob(0.5) == true && cont2 <= 1 && i != discriminar) {
                     discriminar = i;
@@ -216,7 +210,6 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return fallo;
     }
 
-
     public static int posicionFallo(int contFallo, int[] mensajeN, int[] mensajeR) {
 
         int falloPos = -3;
@@ -257,7 +250,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
                 falloPos = falloPos + (int) Math.pow(2, i);
                 contFallo++;
             }//if
-        }//for
+        }//for    
         posicionFallo(contFallo, mensajeN, mensajeR);
         escribirFallos(contFallo, mensajeN, mensajeR);
     }
