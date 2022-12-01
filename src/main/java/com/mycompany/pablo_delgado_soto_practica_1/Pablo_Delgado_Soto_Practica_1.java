@@ -4,6 +4,18 @@ import java.util.Scanner;
 
 public class Pablo_Delgado_Soto_Practica_1 {
     
+    public static void main(String[] args) {
+
+        String msg = escribirMensaje();
+        int[] mensaje = new int[sender(msg).length];
+        System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
+        int[] mensajeN = new int[mensaje.length];
+        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
+        provocarError(mensajeN);
+        int[] mensajeR = new int[mensajeN.length];
+        reciever(mensajeN, mensajeR, msg);
+    }//main
+    
     public static boolean prob(double prob) {
 
         return Math.random() < prob;
@@ -43,7 +55,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             pow = (int) Math.pow(2, i);
             escribir(mensaje, tmp, pow);
         }//for
-    }
+    }//escribirPaidad
 
     public static double probFallo(double prob) {
 
@@ -65,7 +77,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             bitR++;
         }//while
         return bitR;
-    }
+    }//cuantosBitR
 
     public static int[] calcPosBitR(String msg) {
 
@@ -74,7 +86,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             temp[i] = (int) Math.pow(2, i);
         }//for
         return temp;
-    }
+    }//calcPosBitR
 
     public static int[] escribirMsgArr(int tam, String msg) {
 
@@ -101,7 +113,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
         }//for
         return mensaje;
-    }
+    }//escribirMensajeArr
 
     public static int[] posicionesParaObservar(int[] mensaje, String msg) {
 
@@ -123,7 +135,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             contBit = contBit * 2;
         }//while
         return sumas;
-    }
+    }//posicionesParaObservar
 
     public static int calcularParidad(int[] mensaje) {
 
@@ -132,7 +144,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             sumaG = sumaG + mensaje[i];
         }//for
         return sumaG;
-    }
+    }//calcularParidad
 
     public static int[] sender(String msg) {
 
@@ -147,7 +159,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         escribirParidad(sumas, mensaje);
         escribir(mensaje, calcularParidad(mensaje) % 2, 0);
         return mensaje;
-    }
+    }//sender
 
     public static int[] provocarError(int[] mensajeN) {
 
@@ -175,7 +187,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//for
         }//if
         return mensajeN;
-    }
+    }//provocarError
 
     public static void escribirError(int[] mensaje, int i) {
 
@@ -184,7 +196,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         } else {
             mensaje[i] = 1;
         }//if
-    }
+    }//escribirError
 
     public static void copiarBitsMensaje(int[] mensajeN, int[] mensajeR) {
 
@@ -196,7 +208,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
             mensajeR[i] = mensajeN[i];
         }//for
-    }
+    }//copiarBitsMensaje
 
     public static int calcularFallos(int contFallo, int[] mensajeN) {
 
@@ -207,7 +219,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             fallo = 2;
         }//if
         return fallo;
-    }
+    }//calcularFallos
 
     public static int posicionFallo(int contFallo, int[] mensajeN, 
             int[] mensajeR) {
@@ -221,7 +233,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
             }//if
         }//if
         return falloPos;
-    }
+    }//posicionFallo
     
     public static void escribirFallos(int contFallo, int[] mensajeN, 
             int[] mensajeR){
@@ -234,7 +246,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         } else {
             System.out.println("No se detectaron errores");
         }//if
-    }
+    }//escribirFallos
     
     public static void reciever(int[] mensajeN, int[] mensajeR, String msg){
         
@@ -255,17 +267,5 @@ public class Pablo_Delgado_Soto_Practica_1 {
         }//for    
         posicionFallo(contFallo, mensajeN, mensajeR);
         escribirFallos(contFallo, mensajeN, mensajeR);
-    }
-    
-    public static void main(String[] args) {
-
-        String msg = escribirMensaje();
-        int[] mensaje = new int[sender(msg).length];
-        System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
-        int[] mensajeN = new int[mensaje.length];
-        System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
-        provocarError(mensajeN);
-        int[] mensajeR = new int[mensajeN.length];
-        reciever(mensajeN, mensajeR, msg);
-    }//main
+    }//reciever
 }//Pablo_Delgado_Soto_Practica_1
