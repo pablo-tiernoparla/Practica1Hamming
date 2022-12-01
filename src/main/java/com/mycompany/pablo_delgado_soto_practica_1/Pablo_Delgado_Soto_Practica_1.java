@@ -103,7 +103,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return mensaje;
     }
 
-    public static int[] pendienteBitR(int[] mensaje, String msg) {
+    public static int[] posicionesParaObservar(int[] mensaje, String msg) {
 
         int contBit = 1;
         int result;
@@ -142,7 +142,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         System.arraycopy(escribirMsgArr(tam, msg), 
                 0, mensaje, 0, mensaje.length);
         int[] sumas = new int[bitR];
-        System.arraycopy(pendienteBitR(mensaje, msg), 
+        System.arraycopy(posicionesParaObservar(mensaje, msg), 
                 0, sumas, 0, sumas.length);
         escribirParidad(sumas, mensaje);
         escribir(mensaje, calcularParidad(mensaje) % 2, 0);
@@ -239,8 +239,8 @@ public class Pablo_Delgado_Soto_Practica_1 {
     public static void reciever(int[] mensajeN, int[] mensajeR, String msg){
         
         copiarBitsMensaje(mensajeN, mensajeR);
-        pendienteBitR(mensajeR, msg);
-        escribirParidad(pendienteBitR(mensajeR, msg), mensajeR);
+        posicionesParaObservar(mensajeR, msg);
+        escribirParidad(posicionesParaObservar(mensajeR, msg), mensajeR);
         escribir(mensajeR, calcularParidad(mensajeR) % 2, 0);
         calcularParidad(mensajeN);
         //calcular inconsistencias y lugar del fallo
