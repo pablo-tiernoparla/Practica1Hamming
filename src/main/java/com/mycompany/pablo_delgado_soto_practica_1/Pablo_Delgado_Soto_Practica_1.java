@@ -149,27 +149,27 @@ public class Pablo_Delgado_Soto_Practica_1 {
         return mensaje;
     }
 
-    public static int[] provocarError(int[] mensaje, int[] mensajeN) {
+    public static int[] provocarError(int[] mensajeN) {
 
         int cont = 0;
         int discriminar = -3;
         double prob = probFallo(0.33);
         if (prob == 1) {
-            for (int i = 0; i < mensaje.length; i++) {
+            for (int i = 0; i < mensajeN.length; i++) {
                 if (prob(0.5) == true && cont == 0) {
                     cont++;
                     escribirError(mensajeN, i);
-                } else if (i == mensaje.length && cont == 0) {
+                } else if (i == mensajeN.length && cont == 0) {
                     i = 0;
                 }//if
             }//for
         } else if (prob == 2) {
-            for (int i = 0; i < mensaje.length; i++) {
+            for (int i = 0; i < mensajeN.length; i++) {
                 if (prob(0.5) == true && cont <= 1 && i != discriminar) {
                     discriminar = i;
                     cont++;
                     escribirError(mensajeN, i);
-                } else if (i == mensaje.length && cont <= 1) {
+                } else if (i == mensajeN.length && cont <= 1) {
                     i = 0;
                 }//if
             }//for
@@ -243,6 +243,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         escribirParidad(pendienteBitR(mensajeR, msg), mensajeR);
         escribir(mensajeR, calcularParidad(mensajeR) % 2, 0);
         calcularParidad(mensajeN);
+        //calcular inconsistencias y lugar del fallo
         int contFallo = 0;
         int falloPos = 0;
         for (int i = 0; i < cuantosBitsR(msg); i++) {
@@ -263,7 +264,7 @@ public class Pablo_Delgado_Soto_Practica_1 {
         System.arraycopy(sender(msg), 0, mensaje, 0, mensaje.length);
         int[] mensajeN = new int[mensaje.length];
         System.arraycopy(mensaje, 0, mensajeN, 0, mensaje.length);
-        provocarError(mensaje, mensajeN);
+        provocarError(mensajeN);
         int[] mensajeR = new int[mensajeN.length];
         reciever(mensajeN, mensajeR, msg);
     }//main
